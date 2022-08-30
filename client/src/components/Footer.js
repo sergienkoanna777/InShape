@@ -16,12 +16,22 @@ const Footer = () => (
 
 const Icon = styled(BsInstagram)`
 font-size:40px;
+:hover{
+            color:#D61C4E;
+        }
 `
 const IconTwo = styled(FiTwitter)`
 font-size:40px;
+:hover{
+            color:#D61C4E;
+        }
 `
 const IconThree = styled(GrFacebook)`
 font-size:40px;
+
+:hover{
+            color:#D61C4E;
+        }
 `
 const FooterStyle = styled.div`
     margin-top: 1rem;

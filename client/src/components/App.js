@@ -9,17 +9,19 @@ import Footer from "./Footer";
 import Plateau from "./Plateau";
 import Tempo from "./Tempo";
 import Kettlebell from "./Kettlebell";
+import Navbar from "./Navbar";
+import Exercises from "./Exercises";
 
 const App = () => {
 
   return (
     <BrowserRouter>
     <GlobalStyles />
-    {/* <Header /> */}
+    <Navbar/>
     <>
       <Routes>
         <Route path="/" element={<Homepage />} />
-
+        <Route path="/exercises" element={<Exercises/>} />
         <Route path="/foratletes" element={<ForAtletes/>} />
           <Route path="/forcoaches" element={<ForCoaches/>} />
           <Route path="/tempo" element={<Tempo/>} />

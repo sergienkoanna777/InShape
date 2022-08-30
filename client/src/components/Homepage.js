@@ -80,7 +80,6 @@ const BoxItem = styled.div`
     display: flex;
     flex-direction:column;
     img {
-    background: #fafafa;
     border-radius: 4px;
     box-shadow: 10px 10px 10px 0 rgba(128, 128, 128, 0.44);
 }
@@ -102,6 +101,7 @@ const TextBox = styled.div`
     p {
         font-size: 20px;
         margin: 13px;
+        line-height: 1.5;
     }
 `;
 
@@ -132,7 +132,6 @@ const ItemCategory = styled.div`
     margin: 20px;
 
 img {
-    background: #fafafa;
     border-radius: 4px;
     box-shadow: 10px 10px 10px 0 rgba(128, 128, 128, 0.44);
 }
