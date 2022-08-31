@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
 import { useNavigate } from "react-router-dom";
@@ -12,9 +12,10 @@ import Kettlebell from "./Kettlebell";
 import Navbar from "./Navbar";
 import Exercises from "./Exercises";
 import SignIn from "./SignIn";
+import AllExercisesPage from "./AllExercisesPage";
 
 const App = () => {
-
+  const [loading, setLoading] = useState(false);
   return (
     <BrowserRouter>
     <GlobalStyles />
@@ -33,12 +34,12 @@ const App = () => {
         {/* <Route
           path="/products/categories/:_category"
           element={<CategoryFeed setLoading={setLoading} loading={loading} />}
-        />
+        /> */}
         <Route
-          path="products"
-          element={<ProductPage setLoading={setLoading} loading={loading} />}
+          path="/allexercisespage"
+          element={<AllExercisesPage setLoading={setLoading} loading={loading} />}
         />
-        <Route path="/products/:_id" element={<ItemPage />} />
+        {/* <Route path="/products/:_id" element={<ItemPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="cart/confirmed" element={<ConfirmationPage />} />
         <Route path="/facts" element={<Facts/>} />

@@ -44,7 +44,7 @@ const Exercises = () => {
             </Container>
             <ContainerTwo>
                 <HomepageBox>
-                    <img src={image15} width="1000px" alt="watch" />
+                    <img onClick={()=>(navigate("/allexercisespage"))}  src={image15} width="1000px" alt="watch" />
                         <div className="text">
                             <div className="nameItems">
                                 <h3>All exercises</h3>
