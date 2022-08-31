@@ -11,6 +11,7 @@ import Tempo from "./Tempo";
 import Kettlebell from "./Kettlebell";
 import Navbar from "./Navbar";
 import Exercises from "./Exercises";
+import SignIn from "./SignIn";
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/tempo" element={<Tempo/>} />
           <Route path="/plateau" element={<Plateau/>} />
           <Route path="/kettlebell" element={<Kettlebell/>} />
+          <Route path="/signin" element={<SignIn/>} />
           
         {/* <Route
           path="/products/categories/:_category"

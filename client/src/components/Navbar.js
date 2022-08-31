@@ -16,13 +16,19 @@ const Navbar = () =>{
     // }
         return(
         <Header>
-            <button className="logo">InShape</button>
+            <NavigationLink to= "/">
+            <h3>InShape</h3>
+            </NavigationLink>
+            
             {/* <button className="logo" onClick={handleToHomeFeed}>InShape</button> */}
             <NavigationLink to= "/exercises">
                     <h3> Exercises</h3>
                 </NavigationLink>
             {/* <button className="exercises" onClick={handleToHomeFeed}>Exercises</button> */}
-            <button className="signin">Sign in</button>
+            <NavigationLink to= "/signin">
+            <h3>Sign in</h3>
+            </NavigationLink>
+            
             {/* {
                 !currentUser ?(
                     <button className="signin" onClick={handleSignIn}>Sign in</button>

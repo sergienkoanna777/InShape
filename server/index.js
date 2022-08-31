@@ -6,7 +6,14 @@ const{
     exerciseById,
     getExercisesByBodyPart,
     getExercisesByName,
-    getExercisesByEquipment
+    getExercisesByEquipment,
+    createNewUser,
+    handleSignIn,
+    addToFavorites,
+    deleteFromFavorites,
+    createWorkout,
+    addExerciseToWorkout,
+    getUserById
 } = require("./handlers");
 
 express()
@@ -19,6 +26,14 @@ express()
 .get("/exercises/bodyPart/:bodyPart", getExercisesByBodyPart)
 .get("/exercises/name/:name", getExercisesByName)
 .get("/exercises/equipment/:equipment", getExercisesByEquipment)
+.post("/create-user", createNewUser)
+.post("/signin", handleSignIn)
+.put("/favorites", addToFavorites)
+.delete("/favorites", deleteFromFavorites)
+.put("/workout", createWorkout)
+.put("/addExercise", addExerciseToWorkout)
+.get("/user/:userId", getUserById)
+
 
 // this is our catch all endpoint.
 .get("*", (req, res) => {

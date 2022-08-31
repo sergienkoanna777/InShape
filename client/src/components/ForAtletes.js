@@ -5,7 +5,9 @@ const ForAtletes = () => {
     return (
         <>
         <ImageStyle>
+            <>
         <p>THE BEST PERFORMANCE FITNESS APP</p>
+        </>
             <img src={image2} width="800px" alt="watch" />
             
         </ImageStyle>
@@ -25,9 +27,9 @@ const ForAtletes = () => {
 
 const ImageStyle = styled.div`
     width: 80%;
-    height: 100vh;
+    height: 90vh;
     display: flex;
-    position: relative;
+    /* position: relative; */
 
     img {
         width: 80%;

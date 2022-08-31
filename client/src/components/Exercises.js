@@ -10,49 +10,48 @@ const Exercises = () => {
     const navigate = useNavigate();
     return (
         <>
-        <Container>
-                        <ItemCategory>
-                            <Visual>
-                            <img onClick={()=>(navigate("/forcoaches"))} src={image14} width="250px" alt="watch" />
+            <Container>
+                <ItemCategory>
+                    <Visual>
+                        <img onClick={()=>(navigate("/forcoaches"))} src={image14} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
-                                <h3>List of body parts</h3>
+                                    <h3>List of body parts</h3>
                                 </div>
                             </div>
-                            </Visual>
-                        </ItemCategory>
-                        <ItemCategory>
-                            <Visual>
-                            <img  onClick={()=>(navigate("/foratletes"))} src={image9} width="250px" alt="watch" />
+                    </Visual>
+                </ItemCategory>
+                <ItemCategory>
+                    <Visual>
+                        <img  onClick={()=>(navigate("/foratletes"))} src={image9} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
-                                <h3>List of targer muscles</h3>
+                                    <h3>List of target muscles</h3>
                                 </div>
                             </div>
-                            </Visual>
-                        </ItemCategory>
-                        <ItemCategory>
-                            <Visual>
-                            <img  onClick={()=>(navigate("/foratletes"))} src={image8} width="250px" alt="watch" />
+                    </Visual>
+                </ItemCategory>
+                <ItemCategory>
+                    <Visual>
+                        <img  onClick={()=>(navigate("/foratletes"))} src={image8} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
-                                <h3>List of equipement</h3>
+                                    <h3>List of equipement</h3>
                                 </div>
                             </div>
-                            </Visual>
-                        </ItemCategory>
-                </Container>
-                 <ContainerTwo>
+                    </Visual>
+                </ItemCategory>
+            </Container>
+            <ContainerTwo>
                 <HomepageBox>
-                    
                     <img src={image15} width="1000px" alt="watch" />
-                    <div className="text">
-                                <div className="nameItems">
+                        <div className="text">
+                            <div className="nameItems">
                                 <h3>All exercises</h3>
-                                </div>
                             </div>
+                        </div>
                 </HomepageBox>
-                </ContainerTwo>
+            </ContainerTwo>
         </>
     );
 };
