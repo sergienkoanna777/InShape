@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-// import img19 from "../media/img19.jpg";
 import image8 from "../media/image8.jpg";
 import image9 from "../media/image9.jpg";
 import image14 from "../media/image14.jpg";
@@ -13,7 +12,7 @@ const Exercises = () => {
             <Container>
                 <ItemCategory>
                     <Visual>
-                        <img onClick={()=>(navigate("/forcoaches"))} src={image14} width="250px" alt="watch" />
+                        <img onClick={()=>(navigate("/listofbody"))} src={image14} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
                                     <h3>List of body parts</h3>

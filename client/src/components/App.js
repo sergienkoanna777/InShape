@@ -13,9 +13,12 @@ import Navbar from "./Navbar";
 import Exercises from "./Exercises";
 import SignIn from "./SignIn";
 import AllExercisesPage from "./AllExercisesPage";
+import ItemPage from "./ItemPage";
+import Profile from "./Profile";
+import Registration from "./Registration";
+import ListOfBody from "./ListOfBody";
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
   return (
     <BrowserRouter>
     <GlobalStyles />
@@ -30,21 +33,17 @@ const App = () => {
           <Route path="/plateau" element={<Plateau/>} />
           <Route path="/kettlebell" element={<Kettlebell/>} />
           <Route path="/signin" element={<SignIn/>} />
-          
-        {/* <Route
-          path="/products/categories/:_category"
-          element={<CategoryFeed setLoading={setLoading} loading={loading} />}
-        /> */}
+          <Route path="/user/:userId" element={<Profile/>} />
+          <Route path="/registration" element={<Registration/>} />
         <Route
           path="/allexercisespage"
-          element={<AllExercisesPage setLoading={setLoading} loading={loading} />}
+          element={<AllExercisesPage/>}
         />
-        {/* <Route path="/products/:_id" element={<ItemPage />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="cart/confirmed" element={<ConfirmationPage />} />
-        <Route path="/facts" element={<Facts/>} />
-        <Route path="/about" element={<About />} />
-        <Route path="" element={<h1>404: Oops!</h1>} /> */}
+        <Route
+          path="/listofbody"
+          element={<ListOfBody/>}
+        />
+        <Route path="/exercises/exercise/:exercise" element={<ItemPage />} />
       </Routes>
       <Footer />
     </>

@@ -162,7 +162,8 @@ const createNewUser =async(req, res) => {
     try{
         await client.connect();
         const db = client.db("InShape");
-        const {name, lastName, email, gander, age, weight, password, confirmPassword, favorites, workouts, status, clients} = req.body;
+        const {name, lastName, email, gender, age, weight, password, confirmPassword, favorites, workouts, status, clients} = req.body;
+        
         //validations
 
         if(!name){
@@ -177,8 +178,8 @@ const createNewUser =async(req, res) => {
         else if(!email.includes("@")){
             return  res.status(400).json({ status: 400, message: "Please, enter your valide email" });
         }
-        else if(!gander){
-            return  res.status(400).json({ status: 400, message: "Please, enter your gander" });
+        else if(!gender){
+            return  res.status(400).json({ status: 400, message: "Please, enter your gender" });
         }
         else if(!age){
             return  res.status(400).json({ status: 400, message: "Please, enter your age" });
@@ -197,14 +198,14 @@ const createNewUser =async(req, res) => {
         }
         //id for new user
         const _id = uuidv4();
-        const newUser = {};
-        if(status === "atlet") {
+        let newUser = {};
+        if(status === "athlet") {
             newUser = {
                 _id,
                 name: name,
                 lastName: lastName,
                 email:email,
-                gander:gander, 
+                gender:gender, 
                 age:age, 
                 weight:weight, 
                 password:password, 
@@ -221,7 +222,7 @@ const createNewUser =async(req, res) => {
                 name: name,
                 lastName: lastName,
                 email:email,
-                gander:gander, 
+                gender:gender, 
                 age:age, 
                 weight:weight, 
                 password:password, 
@@ -232,13 +233,17 @@ const createNewUser =async(req, res) => {
                 clients:clients
             }
         }
+        
          //validation if user exists
-        const existingUser = await db.collection("clients").findOne({email:email});
-        if(existingUser){
+        const existingClient = await db.collection("clients").findOne({email:email});
+        
+        if(existingClient){
             return  res.status(400).json({ status: 400, message: "This email is alredy used" });
         }
         else{
-            const result = await db.collection("clients").insertOne(newUser);
+            
+            const  result = await db.collection("clients").insertOne(newUser);
+            
             result
                 ? res.status(201).json({ status: 201, data: newUser, message: "Success" })
                 : res.status(400).json({ status: 400, message: "Please provide valid data" });
@@ -268,6 +273,7 @@ const handleSignIn = async(req,res) => {
         else if (user.password !== userPassword) {
             return  res.status(400).json({ status: 400, message: "Your password is't correct" });
         }
+        
         else{
             return res.status(200).json({ status: 200, data: user, message: "Success" })
         }
@@ -418,7 +424,6 @@ const getUserById = async(req,res) => {
         await client.connect();
         const db = client.db("InShape");
         const {userId} = req.params;
-            
             const result = await db.collection("clients").findOne({_id:userId});
             result
             ? res.status(200).json({ status: 200, data:result, message: "Succes" })

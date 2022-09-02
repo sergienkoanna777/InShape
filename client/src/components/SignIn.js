@@ -1,16 +1,62 @@
 
+import { useContext, useEffect, useState } from "react";
+import { CurrentUserContext } from "./CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Button from "./Button";
 
 const SignIn = () =>{
+    const navigate = useNavigate();
+    const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
+    const [userPassword, setUserPassword] = useState("");
+    const[userEmail, setUserEmail] = useState("");
+    const handleEmail = (e) => {
+        setUserEmail(e.target.value)
+    }
+    const handlePassword = (e) => {
+        setUserPassword(e.target.value)
+    }
+    useEffect(() =>{
+        if(currentUser){
+            navigate("/");
+        }
+    },[])
     
+    const handleSignIn = (event) =>{
+        event.preventDefault();
+        fetch("/signin",{
+            method: "POST",
+            body: JSON.stringify({
+                userPassword:userPassword, userEmail:userEmail
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        } )
+        .then((res)=>res.json())
+        .then((json)=>{
+            if(json.status ===200){
+                window.sessionStorage.setItem("user", JSON.stringify(json.data));
+                setCurrentUser(json.data);
+                navigate(`/user/${json.data._id}`)
+                
+            }
+            else{
+                window.alert(json.message)
+            }
+        })
+    }
     return (
         <SignInStyled>
         <form className="form" onSubmit={(event)=>{handleSignIn(event)}}>
         <div className="signInForm">
-            <input className="input" name= "input" type="text" placeholder="Your first Name" onChange={(e) =>{handleUserName(e)}}/>
-            <button className="button" type="submit">Sign In</button>
+            <input className="input" name= "input" required type="email" placeholder="Your email" onChange={(e) =>{handleEmail(e)}}/>
+            <input className="input" name= "input" required type="password" placeholder="Your password" onChange={(e) =>{handlePassword(e)}}/>
+            <Button type="submit">Sign In</Button>
             </div>
         </form>
+        <p>Don't have an account yet?</p>
+            <button onClick={()=> {navigate("/registration")}}>Join Us!</button>
         </SignInStyled>
     )
 }
@@ -31,16 +77,7 @@ const SignInStyled = styled.div`
     
     
 }
-.button{
-    border: none;
-    background-color : #4FBDBA;
-    color: white;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 20px;
-    
-}
+
 .signInForm{
     display: flex;
     flex-direction: column;

@@ -1,21 +1,25 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "./CurrentUserContext";
 import ItemCard from "./ItemCard";
 import Loading from "./Loading";
 import image15 from "../media/image15.jpg";
 
 
-const AllExercisesPage = (props) => {
+const AllExercisesPage = () => {
+    const {loading, setLoading} = useContext(CurrentUserContext)
     const [allExercises, setAllExercises] = useState(null);
-    const [loading, setLoading] = useState(false);
     useEffect(() => {
         fetch(`/exercises`)
             .then((res) => res.json())
             .then((data) => {
                 setAllExercises(data.data); 
-            setLoading(true);
-            props.setLoading(true);
-        });
+                setLoading(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
     return (
         <>
@@ -25,9 +29,7 @@ const AllExercisesPage = (props) => {
                 {loading ? (
                 allExercises.map((exercise) => {
                     return (
-                    <ItemProfile>
-                        <ItemCard exercise={exercise} loading={props.loading} />
-                    </ItemProfile>
+                        <ItemCard  exercise={exercise} loading={loading} />
                     );
                 })
                 ) : (
@@ -61,21 +63,6 @@ const AllExercisesPage = (props) => {
         justify-content: center;
     `;
     
-    const ItemProfile = styled.div`
-        display: flex;
-        background: white;
-        box-shadow: 10px 10px 8px 0 rgba(128, 128, 128, 0.44);
-        gap: 20px;
-        border-radius: 20px;
-        margin: 30px;
-        border: none;
-        font-size: 20px;
-        image-resolution: unset;
     
-        :hover {
-        box-shadow: 0 0 15px 1px #2b4865;
-        opacity: 70%;
-        }
-    `;
     
     export default AllExercisesPage;

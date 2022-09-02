@@ -1,31 +1,41 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-const ItemCard = (props) => {
-    const exercise = props.exercise;
-
+const ItemCard = ({exercise}) => {
     return (
-        <Wrapper>
-        {/* Conditional rendering below */}
-        {props.loading && (
-            <>
-            <NavigationLink to={`/exercises/${exercise.exercise}`}>
-                <StyledImg
-                alt="base64 encoded URL of product"
-                src={exercise.gifUrl}
-                />
-                <StyledInfo>
-                <p className="name">{exercise.name}</p>
-                <p className="target">{exercise.target}</p>
-                </StyledInfo>
-            </NavigationLink>
-            </>
-        )}
-        </Wrapper>
+        <ItemProfile>
+            <Wrapper>
+                <NavigationLink to={`/exercises/${exercise.exercise}`}>
+                    <StyledImg 
+                    alt="URL of product"
+                    src={exercise.gifUrl}
+                    />
+                    <StyledInfo>
+                    <p className="name">{exercise.name}</p>
+                    <p className="target">{exercise.target}</p>
+                    </StyledInfo>
+                </NavigationLink>
+            </Wrapper>
+        </ItemProfile>
     );
 };
 
-
+const ItemProfile = styled.div`
+        display: flex;
+        background: white;
+        box-shadow: 10px 10px 8px 0 rgba(128, 128, 128, 0.44);
+        gap: 20px;
+        border-radius: 20px;
+        margin: 30px;
+        border: none;
+        font-size: 20px;
+        image-resolution: unset;
+    
+        :hover {
+        box-shadow: 0 0 15px 1px #2b4865;
+        opacity: 70%;
+        }
+    `;
 
 const StyledInfo = styled.div`
     display: flex;

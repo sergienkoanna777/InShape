@@ -1,41 +1,39 @@
 import { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 
-// import { CurrentUserContext } from "./CurrentUserContext";
+import { CurrentUserContext } from "./CurrentUserContext";
 
 const Navbar = () =>{
-    // const {currentUser, setCurrentUser} = useContext(CurrentUserContext)
-    // const history = useHistory();
-    // const handleSignIn = () =>{
-    //     history.push("/signin")
-    // }
-    // const handleToHomeFeed = () =>{
-    //     history.push("/");
-    // }
+    const {currentUser, setCurrentUser} = useContext(CurrentUserContext)
+    const navigate = useNavigate();
+    const handleSignOut = () =>{
+        window.sessionStorage.removeItem("user");
+        setCurrentUser(null);
+    }
         return(
         <Header>
             <NavigationLink to= "/">
-            <h3>InShape</h3>
+                <h3>InShape</h3>
             </NavigationLink>
             
-            {/* <button className="logo" onClick={handleToHomeFeed}>InShape</button> */}
             <NavigationLink to= "/exercises">
-                    <h3> Exercises</h3>
-                </NavigationLink>
-            {/* <button className="exercises" onClick={handleToHomeFeed}>Exercises</button> */}
-            <NavigationLink to= "/signin">
-            <h3>Sign in</h3>
+                <h3> Exercises</h3>
             </NavigationLink>
-            
-            {/* {
-                !currentUser ?(
-                    <button className="signin" onClick={handleSignIn}>Sign in</button>
-                ): (
-                    <p>Hello {currentUser.name}</p>
+
+            {
+                currentUser ? (
+                    <NavigationLink onClick={handleSignOut} to = "/">
+                    <h3>Sign out</h3>
+                </NavigationLink>
+                    
+                ):(
+                    <NavigationLink to= "/signin">
+                    <h3>Sign in</h3>
+                </NavigationLink>
                 )
-            }    */}
+            }
         </Header>
     )
 }
@@ -71,6 +69,9 @@ const Header = styled.div`
         }
         .exercises:hover{
             color:#AEFEFF;
+        }
+        h3{
+            margin: 30px;
         }
 `;
 

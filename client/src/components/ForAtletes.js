@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import image2 from "../media/image2.jpg";
+import Button from "./Button";
 
 const ForAtletes = () => {
     return (
@@ -20,6 +21,7 @@ const ForAtletes = () => {
                     <p>Free built-in sessions designed for any goal and difficulty make it easy to get started.</p>
                     <p>Ready for more? Choose from our free basic programs or buy a program from a world-class coach.</p>
             </TextBox>
+            <Button>Hello</Button>
         </Box>
         </>
     );
