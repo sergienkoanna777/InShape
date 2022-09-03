@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { CurrentUserContext } from './CurrentUserContext';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
+import background from "../media/image23.jpg";
 
 const Registration = () => {
     const navigate = useNavigate();
@@ -52,6 +53,7 @@ const Registration = () => {
         })
     }
         return (
+            <Box style={{ backgroundImage: `url(${background})` }}>
         <RegistrationStyle>
     <form onSubmit={(e)=> {handleRegistration(e)}} className="form" >
         <div>
@@ -80,7 +82,7 @@ const Registration = () => {
             <label className="label">Age</label>
             <input onChange={(ev) => setAge(ev.currentTarget.value)} className="input" type="text" />
 
-            <label className="label">Weight</label>
+            <label className="label">Weight (pound)</label>
             <input onChange={(ev) => setWeight(ev.currentTarget.value)} className="input" type="text" />
 
             <label className="label">Password</label>
@@ -93,16 +95,22 @@ const Registration = () => {
             </div>
     </form>
         </RegistrationStyle>
+        </Box>
     );
     };
 
-
+const Box = styled.div`
+    height: 90vh;
+    background-position-y: -25ch;
+    background-repeat: no-repeat;
+    background-size: cover;
+`
 
 const RegistrationStyle = styled.div`
     .form{
     position: absolute;
     top: 27%;
-    left: 50%;
+    left: 40%;
     transform: translate(-50%, -20%);
 }
 h1{
@@ -111,31 +119,22 @@ h1{
 
 .input{
     padding: 7px;
-    border: 1px solid #FF8FB1;
+    border: 1px solid #D61C4E;
     border-radius:5px;
-    font-size: 20px;
+    font-size: 15px;
     
     
 }
-/* .btn{
-    border: none;
-    background-color : #D61C4E;
-    color: white;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 20px;
-    
-} */
+
 .signInForm{
     display: flex;
     flex-direction: column;
-    gap:5px;
+    gap:2px;
     background-color: #4FBDBA;
-    height: 720px;
-    width: 550px;
+    height: 630px;
+    width: 450px;
     opacity: 0.8;
-    padding: 50px;
+    padding: 40px;
 }
 `
 export default Registration;

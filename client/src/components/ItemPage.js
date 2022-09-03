@@ -25,6 +25,7 @@ const ItemPage = () => {
             <Wrapper>
             {loading && (
                 <Container>
+                    <h1>Item Page</h1>
                 <div className="exercise-image">
                     <img alt="URL of exercise" src={exercise.gifUrl} />
                 </div>

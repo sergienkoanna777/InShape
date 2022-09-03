@@ -17,38 +17,35 @@ import ItemPage from "./ItemPage";
 import Profile from "./Profile";
 import Registration from "./Registration";
 import ListOfBody from "./ListOfBody";
+import ListOfTarget from "./ListOfTarget";
+import ListOfEquipement from "./ListOfEquipement";
 
 const App = () => {
   return (
     <BrowserRouter>
-    <GlobalStyles />
-    <Navbar/>
-    <>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/exercises" element={<Exercises/>} />
-        <Route path="/foratletes" element={<ForAtletes/>} />
-          <Route path="/forcoaches" element={<ForCoaches/>} />
-          <Route path="/tempo" element={<Tempo/>} />
-          <Route path="/plateau" element={<Plateau/>} />
-          <Route path="/kettlebell" element={<Kettlebell/>} />
-          <Route path="/signin" element={<SignIn/>} />
-          <Route path="/user/:userId" element={<Profile/>} />
-          <Route path="/registration" element={<Registration/>} />
-        <Route
-          path="/allexercisespage"
-          element={<AllExercisesPage/>}
-        />
-        <Route
-          path="/listofbody"
-          element={<ListOfBody/>}
-        />
-        <Route path="/exercises/exercise/:exercise" element={<ItemPage />} />
-      </Routes>
-      <Footer />
-    </>
-  </BrowserRouter>
-    
+      <GlobalStyles />
+        <Navbar/>
+          <>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/exercises" element={<Exercises/>} />
+              <Route path="/foratletes" element={<ForAtletes/>} />
+              <Route path="/forcoaches" element={<ForCoaches/>} />
+              <Route path="/tempo" element={<Tempo/>} />
+              <Route path="/plateau" element={<Plateau/>} />
+              <Route path="/kettlebell" element={<Kettlebell/>} />
+              <Route path="/signin" element={<SignIn/>} />
+              <Route path="/user/:userId" element={<Profile/>} />
+              <Route path="/registration" element={<Registration/>} />
+              <Route path="/allexercisespage" element={<AllExercisesPage/>} />
+              <Route path="/listofbody" element={<ListOfBody/>} />
+              <Route path="/listoftarget" element={<ListOfTarget/>} />
+              <Route path="/listofequipement" element={<ListOfEquipement/>} />
+              <Route path="/itempage" element={<ItemPage />} />
+            </Routes>
+          <Footer />
+        </>
+    </BrowserRouter> 
   );
 }
 

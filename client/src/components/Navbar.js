@@ -41,37 +41,23 @@ const Navbar = () =>{
 const NavigationLink = styled(NavLink)`
     text-decoration:none;
     font-size:25px;
+    margin: 0px 40px;
 `;
 
 const Header = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: #35858B;
-    .logo{
-        font-size:35px;
-        
-    }
-    .logo:hover{
-        color:#AEFEFF;
-    }
+
     .signin, .logo, .exercises{
         border:none;
-        background-color: #35858B;
-        margin: 0px 30px;
+        margin: 0px 100px;
         color:#fff;
         font-weight: bold;
     }
-    .signin, .exercises{
-        font-size: 25px;
-    }
-    .signin:hover{
-            color:#AEFEFF;
-        }
-        .exercises:hover{
-            color:#AEFEFF;
-        }
-        h3{
-            margin: 30px;
+    
+        h3:hover{
+            color:#D61C4E;
         }
 `;
 

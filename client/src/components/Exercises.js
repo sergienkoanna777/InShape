@@ -11,8 +11,8 @@ const Exercises = () => {
         <>
             <Container>
                 <ItemCategory>
-                    <Visual>
-                        <img onClick={()=>(navigate("/listofbody"))} src={image14} width="250px" alt="watch" />
+                    <Visual onClick={()=>(navigate("/listofbody"))}>
+                        <img  src={image14} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
                                     <h3>List of body parts</h3>
@@ -21,8 +21,8 @@ const Exercises = () => {
                     </Visual>
                 </ItemCategory>
                 <ItemCategory>
-                    <Visual>
-                        <img  onClick={()=>(navigate("/foratletes"))} src={image9} width="250px" alt="watch" />
+                    <Visual onClick={()=>(navigate("/listoftarget"))}>
+                        <img src={image9} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
                                     <h3>List of target muscles</h3>
@@ -31,8 +31,8 @@ const Exercises = () => {
                     </Visual>
                 </ItemCategory>
                 <ItemCategory>
-                    <Visual>
-                        <img  onClick={()=>(navigate("/foratletes"))} src={image8} width="250px" alt="watch" />
+                    <Visual onClick={()=>(navigate("/listofequipement"))} >
+                        <img src={image8} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
                                     <h3>List of equipement</h3>
@@ -42,11 +42,11 @@ const Exercises = () => {
                 </ItemCategory>
             </Container>
             <ContainerTwo>
-                <HomepageBox>
-                    <img onClick={()=>(navigate("/allexercisespage"))}  src={image15} width="1000px" alt="watch" />
+                <HomepageBox onClick={()=>(navigate("/allexercisespage"))}>
+                    <img src={image15} width="1000px" alt="watch" />
                         <div className="text">
                             <div className="nameItems">
-                                <h3>All exercises</h3>
+                                <h1>All exercises</h1>
                             </div>
                         </div>
                 </HomepageBox>
@@ -64,26 +64,26 @@ const HomepageBox = styled.div`
         height: 60%;
         object-fit: cover;
         border-radius: 4px;
-    box-shadow: 10px 10px 10px 0 rgba(128, 128, 128, 0.44);
-}
-img:hover {
-    box-shadow: 0 0 45px 2px #1cd6ce;
-    opacity: 70%;
-}
+        box-shadow: 10px 10px 10px 0 rgba(128, 128, 128, 0.44);
+        }
+    img:hover {
+        box-shadow: 0 0 45px 2px #1cd6ce;
+        opacity: 70%;
+    }
+    h1:hover{
+        color:#D61C4E;
+    }
 `;
 
 const Container = styled.div`
     display: flex;
     justify-content: space-around;
     margin:50px 250px;
-
-    
 `;
 
 const ContainerTwo = styled.div`
     display: flex;
     justify-content: center;
-
 `;
 
 const ItemCategory = styled.div`
@@ -98,6 +98,7 @@ img {
     border-radius: 4px;
     box-shadow: 10px 10px 10px 0 rgba(128, 128, 128, 0.44);
 }
+
 img:hover {
     box-shadow: 0 0 45px 2px #1cd6ce;
     opacity: 70%;
@@ -117,15 +118,14 @@ const Visual = styled.div`
 }
 h3{
     font-size: 35px;
-    
 }
+h3:hover{
+    color:#D61C4E;
+}
+
 .nameItems {
     line-height: 1;
 }
 `;
-
-
-
-
 
 export default Exercises;

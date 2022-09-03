@@ -15,6 +15,7 @@ const ItemCard = ({exercise}) => {
                     <p className="target">{exercise.target}</p>
                     </StyledInfo>
                 </NavigationLink>
+
             </Wrapper>
         </ItemProfile>
     );
@@ -32,8 +33,8 @@ const ItemProfile = styled.div`
         image-resolution: unset;
     
         :hover {
-        box-shadow: 0 0 15px 1px #2b4865;
-        opacity: 70%;
+        box-shadow: 0 0 15px 2px #00FFDD;
+        opacity: 80%;
         }
     `;
 

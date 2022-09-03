@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "./CurrentUserContext";
 import ItemCard from "./ItemCard";
 import Loading from "./Loading";
-import image15 from "../media/image15.jpg";
+import background from "../media/image27.jpg";
 
 
 const ListOfBody = () => {
@@ -34,71 +33,70 @@ const ListOfBody = () => {
     }
 
     return (
-        <>
-            <ImageStyle>
-            <img src={image15} width="1000px" alt="watch" />
-            <SideBar>
-            {
-                    list.map((item, index) => <button key={index} onClick={() =>{handleSelectedBodyPart(item)}}>{item}</button>)
-                }
-            </SideBar>
-            <CategoryFeedBox>
-                {loading ? (
-                    
-                        bodyPartList.map((exercise) =>{
-                            return  <ItemCard key={exercise.id} exercise={exercise}/>
-                        })
-                    
-                ) : (
-                <Loading />
-                )} 
-            </CategoryFeedBox>
-            </ImageStyle>
-        </>
+        <ImageStyle style={{ backgroundImage: `url(${background})`}}>
+            <Box>
+                <SideBar>
+                    {
+                        list.map((item, index) => <button className="btn" key={index} onClick={() =>{handleSelectedBodyPart(item)}}>{item}</button>)
+                    }
+                </SideBar>
+                <CategoryFeedBox>
+                    {loading ? (
+                        
+                            bodyPartList.map((exercise) =>{
+                                return  <ItemCard key={exercise.id} exercise={exercise}/>
+                            })
+                        
+                    ) : (
+                    <Loading />
+                    )} 
+                </CategoryFeedBox>
+            </Box>
+        </ImageStyle>
         );
     };
 
-    const SideBar = styled.div`
-    
+const Box = styled.div`
+    display: flex;
     `
+const SideBar = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 25%;
+    left: 5%;
+    gap: 20px;
+    border-radius: 20px;
+    border: none;
 
-    const ImageStyle = styled.div`
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-    
-        img {
-        width: 100%;
-        height: 40%;
-        object-fit: cover;
-        }
-    `;
-    const CategoryFeedBox = styled.div`
-        display: flex;
-        flex-wrap: wrap;
-        position: absolute;
-        top: 50%;
-        max-width: 1400px;
-        display: flex;
-        justify-content: center;
-    `;
-    
-    const ItemProfile = styled.div`
-        display: flex;
-        background: white;
-        box-shadow: 10px 10px 8px 0 rgba(128, 128, 128, 0.44);
-        gap: 20px;
-        border-radius: 20px;
-        margin: 30px;
+    .btn{
+        border-radius: 10px;
         border: none;
+        padding: 15px;
         font-size: 20px;
-        image-resolution: unset;
-    
-        :hover {
-        box-shadow: 0 0 15px 1px #2b4865;
-        opacity: 70%;
-        }
-    `;
-    
-    export default ListOfBody;
+        text-transform: uppercase;
+        box-shadow: 10px 10px 8px 0 rgba(128, 128, 128, 0.44);
+    }
+    .btn:hover {
+        box-shadow: 0 0 15px 2px #00FFDD;
+        opacity: 90%;
+    }
+    `
+const CategoryFeedBox = styled.div`
+    display: flex;
+    position: absolute;
+    top: 45%;
+    left: 25%;
+    flex-wrap: wrap;   
+`;
+
+
+const ImageStyle = styled.div`
+    height: 30vh;
+    width: 100%;
+    background-position-y: -40ch;
+    background-repeat: no-repeat;
+    background-size: cover;
+`;
+
+export default ListOfBody;

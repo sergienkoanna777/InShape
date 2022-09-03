@@ -44,6 +44,7 @@ const Btn = styled.button`
 
 :hover {
   box-shadow: 0 0 10px 0 #D61C4E inset, 0 0 10px 4px #D61C4E;
+  color:#072227;
 }
 `;
 export default Button;
