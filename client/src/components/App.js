@@ -19,6 +19,9 @@ import Registration from "./Registration";
 import ListOfBody from "./ListOfBody";
 import ListOfTarget from "./ListOfTarget";
 import ListOfEquipement from "./ListOfEquipement";
+import ProfileSarah from "./ProfileSarah";
+import ProfileBrian from "./ProfileBrian";
+import ProfileKen from "./ProfileKen";
 
 const App = () => {
   return (
@@ -27,28 +30,29 @@ const App = () => {
         <Navbar/>
           <>
             <Routes>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/exercises" element={<Exercises/>} />
-              <Route path="/foratletes" element={<ForAtletes/>} />
-              <Route path="/forcoaches" element={<ForCoaches/>} />
-              <Route path="/tempo" element={<Tempo/>} />
-              <Route path="/plateau" element={<Plateau/>} />
-              <Route path="/kettlebell" element={<Kettlebell/>} />
+              <Route path="/" element={<Homepage />}/>
+              <Route path="/exercises" element={<Exercises/>}/>
+              <Route path="/foratletes" element={<ForAtletes/>}/>
+              <Route path="/forcoaches" element={<ForCoaches/>}/>
+              <Route path="/tempo" element={<Tempo/>}/>
+              <Route path="/plateau" element={<Plateau/>}/>
+              <Route path="/kettlebell" element={<Kettlebell/>}/>
               <Route path="/signin" element={<SignIn/>} />
-              <Route path="/user/:userId" element={<Profile/>} />
-              <Route path="/registration" element={<Registration/>} />
-              <Route path="/allexercisespage" element={<AllExercisesPage/>} />
+              <Route path="/user/:userId" element={<Profile/>}/>
+              <Route path="/registration" element={<Registration/>}/>
+              <Route path="/allexercisespage" element={<AllExercisesPage/>}/>
               <Route path="/listofbody" element={<ListOfBody/>} />
-              <Route path="/listoftarget" element={<ListOfTarget/>} />
-              <Route path="/listofequipement" element={<ListOfEquipement/>} />
-              <Route path="/itempage" element={<ItemPage />} />
+              <Route path="/listoftarget" element={<ListOfTarget/>}/>
+              <Route path="/listofequipement" element={<ListOfEquipement/>}/>
+              <Route path="/itempage" element={<ItemPage />}/>
+              <Route path="/profilesarah" element={<ProfileSarah/>}/>
+              <Route path="/profilebrian" element={<ProfileBrian/>}/>
+              <Route path="/profileken" element={<ProfileKen />}/>
             </Routes>
           <Footer />
         </>
     </BrowserRouter> 
   );
 }
-
-
 
 export default App;
