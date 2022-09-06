@@ -7,7 +7,7 @@ const ItemCard = ({exercise}) => {
             <Wrapper>
                 <NavigationLink to={`/exercises/${exercise.exercise}`}>
                     <StyledImg 
-                    alt="URL of product"
+                    alt="URL of exercise"
                     src={exercise.gifUrl}
                     />
                     <StyledInfo>

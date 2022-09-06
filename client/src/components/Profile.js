@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CurrentUserContext } from "./CurrentUserContext";
 import Loading from "./Loading";
-import image0 from "../media/image0.jpg";
+import image0 from "../media/image0.png";
 import background from "../media/image20.jpg";
 
 
@@ -35,11 +35,9 @@ const {loading, setLoading} = useContext(CurrentUserContext);
                         <StyleHeader style={{ backgroundImage: `url(${background})` }}/>
             <StyledProfile>
                 <UserInfo >
-                    <>
-                    <img src={image0} alt="avatar" width= "250px"/>
-                    </>
+                    <img src={image0} alt="avatar" width= "350px"/>
                     <NameStyle>
-                    <h1 >Name: {userProfile.name}</h1>
+                    <h1 >{userProfile.name} {userProfile.lastName}</h1>
                     <h2>{userProfile.status}</h2>
                     </NameStyle>
                 </UserInfo>
@@ -84,7 +82,7 @@ const {loading, setLoading} = useContext(CurrentUserContext);
                     <img src={image0} alt="avatar" width= "250px"/>
                     </>
                     <NameStyle>
-                    <h1 >Name: {userProfile.name}</h1>
+                    <h1 >{userProfile.name} {userProfile.lastName}</h1>
                     <h2>{userProfile.status}</h2>
                     </NameStyle>
                 </UserInfo>
@@ -138,23 +136,25 @@ const StyleHeader = styled.div`
     background-size: cover;
     
 `;
-const UserInfo = styled.div`
-display: flex;
-gap:35px;
-h1{
-color:#fff;
-font-size:30px;
-}
-img{
-    border: 2px solid #fff;
-}
-`
-const NameStyle =styled.div`
-display: flex;
-align-items: flex-end;
-font-size:25px;
 
-`
+const UserInfo = styled.div`
+    display: flex;
+    gap:25px;
+    h1{
+        color:#fff;
+        font-size:30px;
+    }
+`;
+
+const NameStyle =styled.div`
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    h3{
+        font-size: 35px;
+    }
+`;
+
 const StyledProfile = styled.div`
     margin: -300px 250px 0px;
     display: flex;

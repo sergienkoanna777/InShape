@@ -16,13 +16,15 @@ const ItemPage = () => {
         .then((data) => {
             setItemExercise(data.data);
             setLoading(true); 
+            
         });
-    }, []);
+    }, [exercise]);
     
 
     return (
         <Box>
             <Wrapper>
+                <h1>item page</h1>
             {loading && (
                 <Container>
                     <h1>Item Page</h1>
