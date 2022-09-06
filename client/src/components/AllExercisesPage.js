@@ -8,6 +8,7 @@ import image15 from "../media/image15.jpg";
 
 
 const AllExercisesPage = () => {
+    const navigate = useNavigate();
     const {loading, setLoading} = useContext(CurrentUserContext)
     const [allExercises, setAllExercises] = useState(null);
     useEffect(() => {
@@ -25,11 +26,11 @@ const AllExercisesPage = () => {
         <>
             <ImageStyle>
             <img src={image15} width="1000px" alt="watch" />
-            <CategoryFeedBox>
+            <CategoryFeedBox onClick={()=> {navigate("/itempage")}}>
                 {loading ? (
                 allExercises.map((exercise) => {
                     return (
-                        <ItemCard  exercise={exercise} loading={loading} />
+                        <ItemCard exercise={exercise} loading={loading} />
                     );
                 })
                 ) : (

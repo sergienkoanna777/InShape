@@ -5,7 +5,7 @@ const ItemCard = ({exercise}) => {
     return (
         <ItemProfile>
             <Wrapper>
-                <NavigationLink to={`/exercises/${exercise.exercise}`}>
+                <NavigationLink to={`/exercises/exercise/${exercise.id}`}>
                     <StyledImg 
                     alt="URL of exercise"
                     src={exercise.gifUrl}

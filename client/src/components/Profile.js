@@ -3,14 +3,53 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CurrentUserContext } from "./CurrentUserContext";
 import Loading from "./Loading";
+import Button from "./Button";
 import image0 from "../media/image0.png";
 import background from "../media/image20.jpg";
+import ItemCard from "./ItemCard";
 
 
 const Profile = () => {
-const [userProfile, setUserProfile] = useState({});
-const {loading, setLoading} = useContext(CurrentUserContext);
+    const [userProfile, setUserProfile] = useState({});
+    const {loading, setLoading, currentUser,setCurrentUser} = useContext(CurrentUserContext);
+    const initialState = {
+        age: currentUser?.age,
+        weight: currentUser?.weight,
+        avatar: currentUser?.avatar,
+        description: currentUser?.description
+    }
+    const [userData, setUserData] = useState(initialState);
+    const[display, setDisplay] = useState(true);
+    const [workoutName, setWorkOutName] = useState("");
     let { userId } = useParams();
+    const updateUserData = (value, name) => {
+        setUserData({...userData, [name]:value})
+    }
+    const handleuUpdateUserData = (e) => {
+        e.preventDefault();
+        fetch(`/user/${userId}`,{
+            method: "PATCH",
+            body: JSON.stringify({
+                age:userData.age, 
+                weight:userData.weight, 
+                avatar:userData.avatar,
+                description:userData.description
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        } )
+        .then((res)=>res.json())
+        .then((json)=>{
+            if(json.status ===200){
+                setDisplay(true);
+                window.location.reload();
+            }
+            else{
+                window.alert(json.message)
+            }
+        }) 
+    }
 
     useEffect(() => {
         fetch(`/user/${userId}`)
@@ -23,6 +62,8 @@ const {loading, setLoading} = useContext(CurrentUserContext);
             console.log(err);
         });
     }, [])
+
+
 
     return (
         <>
@@ -46,23 +87,32 @@ const {loading, setLoading} = useContext(CurrentUserContext);
             <Box>
                 <div class="wrapper">
                     <div class="tabs">
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch"/>
-                            <label for="tab-1" class="tab-label">My clients</label>
-                            <div class="tab-content">My father had a small estate in Nottinghamshire: I was the third of five sons. He sent me to Emanuel College in Cambridge at fourteen years old, where I resided three years, and applied myself close to my studies; but the charge of maintaining me, although I had a very scanty allowance, being too great for a narrow fortune, I was bound apprentice to Mr. James Bates, an eminent surgeon in London, with whom I continued four years. </div>
+                    <div class="tab">
+                            <input type="radio" name="css-tabs" id="tab-1" class="tab-switch"/>
+                            <label for="tab-4" class="tab-label">About Me</label>
+                            <div class="tab-content">
+                                
+                            </div>
                         </div>
                         <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-2" class="tab-switch"/>
+                            <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch"/>
+                            <label for="tab-1" class="tab-label">My clients</label>
+                            <div class="tab-content">
+                                <ClientStyle> </ClientStyle>
+                                </div>
+                        </div>
+                        <div class="tab">
+                            <input type="radio" name="css-tabs" id="tab-3" class="tab-switch"/>
                             <label for="tab-2" class="tab-label">All workouts programs</label>
                             <div class="tab-content">My father now and then sending me small sums of money, I laid them out in learning navigation, and other parts of the mathematics, useful to those who intend to travel, as I always believed it would be, some time or other, my fortune to do. </div>
                         </div>
                         <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-3" class="tab-switch"/>
+                            <input type="radio" name="css-tabs" id="tab-4" class="tab-switch"/>
                             <label for="tab-3" class="tab-label">Favorites exercises</label>
                             <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
                         </div>
                         <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-4" class="tab-switch"/>
+                            <input type="radio" name="css-tabs" id="tab-5" class="tab-switch"/>
                             <label for="tab-4" class="tab-label">Creat new workout</label>
                             <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
                         </div>
@@ -91,10 +141,48 @@ const {loading, setLoading} = useContext(CurrentUserContext);
             <Box>
                 <div class="wrapper">
                     <div class="tabs">
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch"/>
-                            <label for="tab-1" class="tab-label">My current workout</label>
-                            <div class="tab-content">My father had a small estate in Nottinghamshire: I was the third of five sons. He sent me to Emanuel College in Cambridge at fourteen years old, where I resided three years, and applied myself close to my studies; but the charge of maintaining me, although I had a very scanty allowance, being too great for a narrow fortune, I was bound apprentice to Mr. James Bates, an eminent surgeon in London, with whom I continued four years. </div>
+                    <div class="tab">
+                            <input type="radio" name="css-tabs" id="tab-1"  class="tab-switch"/>
+                            <label for="tab-1" class="tab-label">About Me</label>
+                            <div class="tab-content">
+                            {
+                                display &&(
+                                <>
+                                    <h3>Age: {userProfile.age}</h3>
+                                    <h3>Weight: {userProfile.weight}</h3>
+                                    <p>About me: {userProfile.description} </p>
+                                    <Button onClick={()=> {setDisplay(false)}}>Update</Button>
+                                    </>
+                                )
+                            }
+                            {
+                                    !display &&(
+                                            <form onSubmit={handleuUpdateUserData}>
+                                                <input 
+                                                    type = "text"
+                                                    name = "age"
+                                                    placeholder={`age: ${currentUser.age}`}
+                                                    onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
+                                                />
+                                                <input 
+                                                    type = "text"
+                                                    name = "weight"
+                                                    placeholder={`weight: ${currentUser.weight}`}
+                                                    onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
+                                                />
+                                                <input 
+                                                    type = "text"
+                                                    name = "description"
+                                                    placeholder="About me"
+                                                    onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
+                                                />
+                                                <h3>{userProfile.weight}</h3>
+                                                <Button type = "submit">Save changes</Button>
+                                            </form>
+                                        
+                                    )
+                                }
+                            </div>
                         </div>
                         <div class="tab">
                             <input type="radio" name="css-tabs" id="tab-2" class="tab-switch"/>
@@ -104,12 +192,28 @@ const {loading, setLoading} = useContext(CurrentUserContext);
                         <div class="tab">
                             <input type="radio" name="css-tabs" id="tab-3" class="tab-switch"/>
                             <label for="tab-3" class="tab-label">Favorites exercises</label>
-                            <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
+                            <div class="tab-content">
+                                <div>
+                                {
+                                    currentUser.favorites.map((exercise) =>{
+                                        return(
+                                            <ItemCard key={exercise.id} exercise={exercise}/>
+                                        )
+                                    })
+                                }
+                                </div>
+                            </div>
                         </div>
                         <div class="tab">
                             <input type="radio" name="css-tabs" id="tab-4" class="tab-switch"/>
-                            <label for="tab-4" class="tab-label">Creat new workout</label>
-                            <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
+                            <label for="tab-4" class="tab-label">Create new workout</label>
+                            <div class="tab-content">
+                                <input type= "text" 
+                                placeholder="Workout name"
+                                onChange = {(e)=>updateUserData(e.target.value, e.target.name)}/>
+                                <input/>
+                                <Button>Create</Button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -161,8 +265,6 @@ const StyledProfile = styled.div`
     flex-direction: column;
 `
 
-
-
 const Box = styled.div`
     font-family: "Open Sans";
     background: #072227;
@@ -189,7 +291,7 @@ const Box = styled.div`
     clear: both;
     }
     .tab {
-    float: left;
+    float: right;
     }
     .tab-switch {
     display: none;
@@ -218,12 +320,14 @@ const Box = styled.div`
     z-index: 1;
     top: 2.75em;
     left: 0;
+    border: 3px solid #072227;
     padding: 1.618rem;
     background: #fff;
     color: #2c3e50;
     border-bottom: 0.25rem solid #bdc3c7;
     opacity: 0;
     transition: all 0.35s;
+    color:red;
     }
     .tab-switch:checked + .tab-label {
     background: #fff;
@@ -235,9 +339,16 @@ const Box = styled.div`
     top: -0.0625rem;
     }
     .tab-switch:checked + label + .tab-content {
-    z-index: 2;
+    z-index: 1;
     opacity: 1;
     transition: all 0.35s;
 }
+`
+
+const ClientStyle = styled.div`
+display: flex;
+`
+const WorkoutStyle = styled.div`
+
 `
 export default Profile;

@@ -24,15 +24,20 @@ const Navbar = () =>{
 
             {
                 currentUser ? (
+                    <>
+                    <NavigationLink to = {`/user/${currentUser._id}`}>
+                    <h3>Profile</h3>
+                </NavigationLink>
                     <NavigationLink onClick={handleSignOut} to = "/">
                     <h3>Sign out</h3>
                 </NavigationLink>
-                    
+                </>
                 ):(
                     <NavigationLink to= "/signin">
                     <h3>Sign in</h3>
                 </NavigationLink>
                 )
+
             }
         </Header>
     )

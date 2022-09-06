@@ -13,7 +13,8 @@ const{
     deleteFromFavorites,
     createWorkout,
     addExerciseToWorkout,
-    getUserById
+    getUserById,
+    updateUser
 } = require("./handlers");
 
 express()
@@ -33,6 +34,7 @@ express()
 .put("/workout", createWorkout)
 .put("/addExercise", addExerciseToWorkout)
 .get("/user/:userId", getUserById)
+.patch("/user/:userId", updateUser)
 
 
 // this is our catch all endpoint.

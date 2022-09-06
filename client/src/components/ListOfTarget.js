@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import { CurrentUserContext } from "./CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import Loading from "./Loading";
 import background from "../media/image27.jpg";
 
 
 const ListOfTarget = () => {
+    const navigate = useNavigate();
     const {loading, setLoading} = useContext(CurrentUserContext);
     const [list, setList] = useState([
         "abductors",

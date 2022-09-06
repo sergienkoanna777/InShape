@@ -80,7 +80,7 @@ const ForCoaches = () => {
                 <p>Store exercises, circuits, programs, and prescriptions. Write 'em once, use 'em forever. Never do the same thing twice.</p>
                 <p>Capture and review data effortlessly. From compliance and progress to online training business data. Quickly see the high level.</p>
                 <ButtonBox>
-                    <Button onClick={()=> {navigate("/itempage")}}>FREE TRIAL</Button>
+                    <Button onClick={()=> {navigate("/registration")}}>FREE TRIAL</Button>
                     </ButtonBox>
             </TextBoxTwo>
         </Box>

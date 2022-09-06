@@ -162,7 +162,7 @@ const createNewUser =async(req, res) => {
     try{
         await client.connect();
         const db = client.db("InShape");
-        const {name, lastName, email, gender, age, weight, password, confirmPassword, favorites, workouts, status, clients} = req.body;
+        const {name, lastName, email, gender, age, weight, password, confirmPassword, favorites, workouts, status, clients, requests, avatar} = req.body;
         
         //validations
 
@@ -212,7 +212,8 @@ const createNewUser =async(req, res) => {
                 confirmPassword:confirmPassword, 
                 favorites:favorites, 
                 workouts:workouts,
-                status:status
+                status:status,
+                avatar:avatar
             }
             
         }
@@ -230,7 +231,9 @@ const createNewUser =async(req, res) => {
                 favorites:favorites, 
                 workouts:workouts,
                 status:status,
-                clients:clients
+                clients:clients,
+                requests:requests,
+                avatar:avatar
             }
         }
         
@@ -438,6 +441,31 @@ const getUserById = async(req,res) => {
         client.close();
     }
 }
+
+const updateUser = async(req,res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    try{
+        await client.connect();
+        const db = client.db("InShape");
+        const {userId} = req.params;
+        const {age, weight, avatar, description} = req.body;
+        console.log(req.body)
+        const query = {_id:userId};
+        const newValues = {$set: {age:age, weight:weight, avatar:avatar, description:description}};
+            const result = await db.collection("clients").updateOne(query, newValues);
+            result
+            ? res.status(200).json({ status: 200, data:result, message: "Succes" })
+            : res.status(400).json({ status: 400, message: "Something went wrong" });  
+    }
+
+    catch(error){
+        console.log(error);
+        res.status(500).json({ status: 500, message: error.message })
+    }
+    finally{
+        client.close();
+    }
+}
 module.exports = {
     getAllExercises,
     getExercisesByTarget,
@@ -451,5 +479,6 @@ module.exports = {
     deleteFromFavorites,
     createWorkout,
     addExerciseToWorkout,
-    getUserById
+    getUserById,
+    updateUser
 }

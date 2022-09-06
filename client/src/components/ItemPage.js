@@ -6,7 +6,8 @@ import { CurrentUserContext } from "./CurrentUserContext";
 
 const ItemPage = () => {
     const [itemExercise, setItemExercise] = useState(null); 
-    const {loading, setLoading} = useContext(CurrentUserContext)
+    const {loading, setLoading, currentUser} = useContext(CurrentUserContext)
+    const [description, setDescription] = useState("")
 
     let navigate = useNavigate();
     let { exercise } = useParams();
@@ -19,26 +20,60 @@ const ItemPage = () => {
             
         });
     }, [exercise]);
-    
+    const handleDescription = (e) => {
+        setDescription(e.target.value)
+    }
+    const handleAddToFavorits = (e) =>{
+        e.preventDefault();
+        fetch("/favorites",{
+            method: "PUT",
+            body: JSON.stringify({
+                bodyPart:itemExercise.bodyPart, 
+                equipment:itemExercise.equipment, 
+                gifUrl:itemExercise.gifUrl, 
+                id:itemExercise.id, 
+                name:itemExercise.name,
+                target:itemExercise.target, 
+                description:description, 
+                userId:currentUser._id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        } )
+        .then((res)=>res.json())
+        .then((json)=>{
+            if(json.status ===201){
+                window.location.reload();
+            }
+            else{
+                window.alert(json.message)
+            }
+        }) 
+    }
+
 
     return (
         <Box>
             <Wrapper>
-                <h1>item page</h1>
             {loading && (
                 <Container>
                     <h1>Item Page</h1>
                 <div className="exercise-image">
-                    <img alt="URL of exercise" src={exercise.gifUrl} />
+                    <img alt="URL of exercise" src={itemExercise.gifUrl} />
                 </div>
                 <div className="text-style">
-                    <h1>{exercise.name}</h1>
+                    <h1>{itemExercise.name}</h1>
                     <div>
-                        <p>Body part: {exercise.bodyPart}</p>
-                        <p>Target: {exercise.target}</p>
-                        <p>Equipment: {exercise.equipment}</p>
+                        <p>Body part: {itemExercise.bodyPart}</p>
+                        <p>Target: {itemExercise.target}</p>
+                        <p>Equipment: {itemExercise.equipment}</p>
+                        <input
+                            type = "text" value = {description} placeholder = "Enter description" onChange={handleDescription}
+                        />
                     </div>                
-                    <button>Add to favorites</button>
+                    <button onClick={handleAddToFavorits} >Add to favorites</button>
+                    <button>Add a new workout</button>
                 </div>
                 </Container>
             )}

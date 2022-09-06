@@ -34,7 +34,9 @@ const Registration = () => {
                 favorites:[], 
                 workouts:[], 
                 status:status, 
-                clients:[]
+                clients:[],
+                requests:[],
+                avatar:null
             }),
             headers: {
                 "Content-Type": "application/json",
