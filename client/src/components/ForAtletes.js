@@ -64,15 +64,15 @@ const ForAtletes = () => {
             <h2>If you want a guaranteed result, choose one of our coach!</h2>
             <FotoBox>
                 <FotoBoxTwo>
-                    <img className="coach" onClick={()=> {navigate("/user/a8c2320c-fab1-4853-b351-d28f5469fe30")}} src={image31} width="300px" alt="watch" />
+                    <img className="coach" onClick={()=> {navigate("/profilebrian")}} src={image31} width="300px" alt="watch" />
                     <h3>Brian Johnson</h3>
                 </FotoBoxTwo>
                 <FotoBoxTwo>
-                <img className="coach" onClick={()=> {navigate("/user/b108d10c-fe77-435b-85f5-630fe3ea7703")}} src={image32} width="300px" alt="watch" />
+                <img className="coach" onClick={()=> {navigate("profilesarah")}} src={image32} width="300px" alt="watch" />
                 <h3>Sarah Smith</h3>
                     </FotoBoxTwo>
                 <FotoBoxTwo>
-                    <img className="coach" onClick={()=> {navigate("/user/e2cb9177-cdc3-4bf7-aafe-7c5237cbf505")}} src={image33} width="300px" alt="watch" />
+                    <img className="coach" onClick={()=> {navigate("/profileken")}} src={image33} width="300px" alt="watch" />
                     <h3>Ken Mitchell</h3>
                 </FotoBoxTwo>
             </FotoBox>
