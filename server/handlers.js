@@ -242,10 +242,11 @@ const createNewUser =async(req, res) => {
         const existingClient = await db.collection("clients").findOne({email:email});
         
         if(existingClient){
+             // if find matching email - give error
             return  res.status(400).json({ status: 400, message: "This email is alredy used" });
         }
         else{
-            
+            // if not - pushes newUser to "clients" collection
             const  result = await db.collection("clients").insertOne(newUser);
             
             result
@@ -298,13 +299,17 @@ const addToFavorites = async(req,res) => {
         await client.connect();
         const db = client.db("InShape");
         const {bodyPart, equipment, gifUrl, id, name, target, description, userId} = req.body;
+         // find user who's favorites we update
         const user = await db.collection("clients").findOne({_id:userId});
-        const exercise = user.favorites.find((exe) => {
+         //check if exercise is already in the favorites
+        let exercise = user.favorites.find((exe) => {
             return exe.id === id
         })
         if(exercise){
+             //if exercise was found in user's favorites - give error
             return  res.status(400).json({ status: 400, message: "Exercise is alredy saved" });
         }
+         //if not - update the array of user's favorites
         else{
             const query = {"_id":userId};
             const newValues = {$addToSet:{"favorites":{bodyPart, equipment, gifUrl, id, name, target, description}}};
@@ -329,7 +334,7 @@ const deleteFromFavorites = async(req,res) => {
         await client.connect();
         const db = client.db("InShape");
         const {id, userId} = req.body;
-        
+            //updating the array of user's workouts
             const query = {"_id":userId};
             const newValues = {$pull:{"favorites":{"id": id}}};
             const result = await db.collection("clients").updateOne(query, newValues);
@@ -375,6 +380,7 @@ const createWorkout = async(req,res) => {
         await client.connect();
         const db = client.db("InShape");
         const {userId, workoutName, exercises,description, status, clients} = req.body;
+         // Creates new _id for workout
         const workoutId = uuidv4();
         console.log(req.body);
         let newWorkout = {};
@@ -400,6 +406,7 @@ const createWorkout = async(req,res) => {
             }
         }
             const query = {"_id":userId};
+            // pushing new workout to the "workouts" collection
             const newValues = {$push:{workouts: newWorkout}};
             const result = await db.collection("clients").updateOne(query, newValues);
             result

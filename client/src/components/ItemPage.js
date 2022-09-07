@@ -12,6 +12,8 @@ const ItemPage = () => {
 
     let navigate = useNavigate();
     let { exercise } = useParams();
+
+    //fetch for exercise 
     useEffect(() => {
         fetch(`/exercises/exercise/${exercise}`)
         .then((res) => res.json())
@@ -21,9 +23,13 @@ const ItemPage = () => {
             
         });
     }, [exercise]);
+
+     //variable that holds value of description when it's being added
     const handleDescription = (e) => {
         setDescription(e.target.value)
     }
+
+     // function that saves exercise in user's 'favorites'
     const handleAddToFavorits = (e) =>{
         e.preventDefault();
         fetch("/favorites",{
@@ -52,7 +58,7 @@ const ItemPage = () => {
             }
         }) 
     }
-
+     // function that saves exercise in user's 'workout'
     const handleAddExerciseToWorkout = (e) =>{
         e.preventDefault();
         fetch("/addExercise",{
