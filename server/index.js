@@ -14,7 +14,8 @@ const{
     createWorkout,
     addExerciseToWorkout,
     getUserById,
-    updateUser
+    updateUser,
+    getWorkout
 } = require("./handlers");
 
 express()
@@ -32,6 +33,7 @@ express()
 .put("/favorites", addToFavorites)
 .delete("/favorites", deleteFromFavorites)
 .put("/workout", createWorkout)
+.get("/workout/:userId", getWorkout)
 .put("/addExercise", addExerciseToWorkout)
 .get("/user/:userId", getUserById)
 .patch("/user/:userId", updateUser)

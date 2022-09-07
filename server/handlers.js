@@ -101,6 +101,7 @@ const getExercisesByBodyPart = async(req, res) => {
         if (error) throw new Error(error);
 
         const result = JSON.parse(body);
+        console.log(result, "result")
         result
         ? res.status(200).json({ status: 200, data: result, message: "Success" })
         : res.status(404).json({ status: 404, message: "Exercise is not found" });
@@ -346,13 +347,36 @@ const deleteFromFavorites = async(req,res) => {
     }
 }
 
+const getWorkout = async(req,res) => {
+    const userId =req.params.userId;
+    const client = new MongoClient(MONGO_URI, options);
+    try{
+        await client.connect();
+        const db = client.db("InShape");
+        
+            const query = {"_id":userId};
+            const result = await db.collection("clients").findOne(query);
+            console.log(result);
+            res.status(200).json({ status: 200, data:result, message: "Workout was created" })
+    }
+
+    catch(error){
+        console.log(error);
+        res.status(500).json({ status: 500, message: error.message })
+    }
+    finally{
+        client.close();
+    }
+}
+
 const createWorkout = async(req,res) => {
     const client = new MongoClient(MONGO_URI, options);
     try{
         await client.connect();
         const db = client.db("InShape");
-        const {userId, workoutName, exercises, status, clients} = req.body;
+        const {userId, workoutName, exercises,description, status, clients} = req.body;
         const workoutId = uuidv4();
+        console.log(req.body);
         let newWorkout = {};
         if (status === "coach") {
             newWorkout = {
@@ -360,6 +384,7 @@ const createWorkout = async(req,res) => {
                 userId:userId,
                 workoutName:workoutName,
                 exercises:exercises,
+                description:description,
                 status:status,
                 clients:clients
             }
@@ -369,6 +394,7 @@ const createWorkout = async(req,res) => {
                 workoutId:workoutId,
                 userId:userId,
                 workoutName:workoutName,
+                description:description,
                 exercises:exercises,
                 status:status
             }
@@ -480,5 +506,6 @@ module.exports = {
     createWorkout,
     addExerciseToWorkout,
     getUserById,
-    updateUser
+    updateUser,
+    getWorkout
 }

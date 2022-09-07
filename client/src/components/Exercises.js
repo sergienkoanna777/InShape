@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import image8 from "../media/image8.jpg";
 import image9 from "../media/image9.jpg";
 import image14 from "../media/image14.jpg";
@@ -21,34 +21,40 @@ const Exercises = () => {
                     </Visual>
                 </ItemCategory>
                 <ItemCategory>
-                    <Visual onClick={()=>(navigate("/listoftarget"))}>
+                    <Visual>
+                    <Link to = "/listoftarget">
                         <img src={image9} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
                                     <h3>List of target muscles</h3>
                                 </div>
                             </div>
+                            </Link>
                     </Visual>
                 </ItemCategory>
                 <ItemCategory>
-                    <Visual onClick={()=>(navigate("/listofequipement"))} >
+                    <Visual >
+                    <Link to = "/listofequipement">
                         <img src={image8} width="250px" alt="watch" />
                             <div className="text">
                                 <div className="nameItems">
                                     <h3>List of equipement</h3>
                                 </div>
                             </div>
+                            </Link>
                     </Visual>
                 </ItemCategory>
             </Container>
             <ContainerTwo>
-                <HomepageBox onClick={()=>(navigate("/allexercisespage"))}>
+                <HomepageBox>
+                    <Link to = "/allexercisespage">
                     <img src={image15} width="1000px" alt="watch" />
                         <div className="text">
                             <div className="nameItems">
                                 <h1>All exercises</h1>
                             </div>
                         </div>
+                        </Link>
                 </HomepageBox>
             </ContainerTwo>
         </>

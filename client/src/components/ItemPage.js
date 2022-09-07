@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "./CurrentUserContext";
+import Button from "./Button";
 
 const ItemPage = () => {
     const [itemExercise, setItemExercise] = useState(null); 
@@ -52,15 +53,44 @@ const ItemPage = () => {
         }) 
     }
 
+    const handleAddExerciseToWorkout = (e) =>{
+        e.preventDefault();
+        fetch("/addExercise",{
+            method: "PUT",
+            body: JSON.stringify({
+                bodyPart:itemExercise.bodyPart, 
+                equipment:itemExercise.equipment, 
+                gifUrl:itemExercise.gifUrl, 
+                id:itemExercise.id, 
+                name:itemExercise.name,
+                target:itemExercise.target, 
+                description:description, 
+                userId:currentUser._id
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        } )
+        .then((res)=>res.json())
+        .then((json)=>{
+            if(json.status ===201){
+                window.location.reload();
+            }
+            else{
+                window.alert(json.message)
+            }
+        }) 
+    }
+
 
     return (
         <Box>
             <Wrapper>
             {loading && (
                 <Container>
-                    <h1>Item Page</h1>
                 <div className="exercise-image">
-                    <img alt="URL of exercise" src={itemExercise.gifUrl} />
+                    { itemExercise.gifUrl && <img alt="URL of exercise" src={itemExercise.gifUrl} />}
+
                 </div>
                 <div className="text-style">
                     <h1>{itemExercise.name}</h1>
@@ -71,9 +101,11 @@ const ItemPage = () => {
                         <input
                             type = "text" value = {description} placeholder = "Enter description" onChange={handleDescription}
                         />
-                    </div>                
-                    <button onClick={handleAddToFavorits} >Add to favorites</button>
-                    <button>Add a new workout</button>
+                    </div> 
+                        <ButtonStyle>
+                            <Button onClick={handleAddToFavorits} >Add to favorites</Button>
+                            <Button onClick={handleAddExerciseToWorkout}>Add a new workout</Button>
+                        </ButtonStyle>
                 </div>
                 </Container>
             )}
@@ -92,6 +124,7 @@ const Box = styled.div`
 `;
 
 const Container = styled.div`
+display: flex;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 5px;
     font-family: sans-serif;
@@ -112,8 +145,26 @@ const Wrapper = styled.div`
     width: 10;
     gap: 50px;
 
-img {
+    .text-style{
+        font-size: 30px;
+    }
+
+.exercise-image {
     width: 250px;
     }
+
+    img{
+        width: 350px;
+    }
+
+    input{
+        padding: 30px;
+        margin: 15px;
+    }
     `;
+    
+    const ButtonStyle = styled.div`
+    display: flex;
+    margin: 15px;
+    `
     

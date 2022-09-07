@@ -20,11 +20,16 @@ const Profile = () => {
     }
     const [userData, setUserData] = useState(initialState);
     const[display, setDisplay] = useState(true);
+    const [status, setStatus] = useState('');
     const [workoutName, setWorkOutName] = useState("");
+    const [workoutId, setWorkOutId]= useState("");
+    const [description, setDescription] = useState("");
     let { userId } = useParams();
     const updateUserData = (value, name) => {
         setUserData({...userData, [name]:value})
     }
+    const [workout, setWorkout] = useState(null);
+
     const handleuUpdateUserData = (e) => {
         e.preventDefault();
         fetch(`/user/${userId}`,{
@@ -56,6 +61,7 @@ const Profile = () => {
         .then(res => res.json())
         .then((data) => {
             setUserProfile(data.data)
+            setStatus(data.data.status)
             setLoading(true)
         })
         .catch((err) => {
@@ -63,7 +69,46 @@ const Profile = () => {
         });
     }, [])
 
+    const createWorkout = (ev) => {
+        ev.preventDefault();
 
+        fetch("/workout", {
+            method: "PUT",
+            body: JSON.stringify({
+                workoutId:workoutId,
+                userId:currentUser._id,
+                workoutName:workoutName,
+                description:description,
+                status:status,
+                clients:[],
+                exercises: []
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res)=>res.json())
+        .then((json)=>{
+            if(json.status ===201){
+                setDisplay(true);
+                window.location.reload();
+            }
+            else{
+                window.alert(json.message)
+            }
+        }) 
+    }
+
+    useEffect(() => {
+        fetch(`/workout/${currentUser._id}`)
+        .then(res => res.json())
+        .then(data => {
+            setWorkout(data.data.workouts)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, [display]);
 
     return (
         <>
@@ -80,46 +125,148 @@ const Profile = () => {
                     <NameStyle>
                     <h1 >{userProfile.name} {userProfile.lastName}</h1>
                     <h2>{userProfile.status}</h2>
+                    <Button>Follow me</Button>
                     </NameStyle>
+                    
                 </UserInfo>
             </StyledProfile>
-
             <Box>
-                <div class="wrapper">
-                    <div class="tabs">
-                    <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-1" class="tab-switch"/>
-                            <label for="tab-4" class="tab-label">About Me</label>
-                            <div class="tab-content">
+                <TabsStyle>
+                        <div className="tabset">
+                            {/* Tab-1 */}
+                            <input type="radio" name="tabset" id="tab1" aria-controls="marzen"/>
+                            <label htmlFor="tab1">About Me</label>
+                            {/* Tab-2 */}
+                            {/* <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier"/>
+                            <label htmlFor="tab2">My clients</label> */}
+                            {/* Tab-3 */}
+                            <input type="radio" name="tabset" id="tab3" aria-controls="dunkles"/>
+                            <label htmlFor="tab3">Favorites exercises</label>
+                            {/* Tab-4 */}
+                            <input type="radio" name="tabset" id="tab4" aria-controls="dunk"/>
+                            <label htmlFor="tab4"> Create new workout</label>
+                        
+                            <div className="tab-panels">
+                                <section id="marzen" className="tab-panel">
+                                <h2>About Me</h2>
+                                    {
+                                        display &&(
+                                            <>
+                                                <h3>Age: {userProfile.age}</h3>
+                                                <h3>Weight: {userProfile.weight}</h3>
+                                                <p>About me: {userProfile.description} </p>
+                                                <Button onClick={()=> {setDisplay(false)}}>Update</Button>
+                                            </>
+                                        )
+                                    }
+                                    {
+                                        !display &&(
+                                                <form onSubmit={handleuUpdateUserData}>
+                                                    <input 
+                                                        type = "text"
+                                                        name = "age"
+                                                        placeholder={`age: ${currentUser.age}`}
+                                                        onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
+                                                    />
+                                                    <input 
+                                                        type = "text"
+                                                        name = "weight"
+                                                        placeholder={`weight: ${currentUser.weight}`}
+                                                        onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
+                                                    />
+                                                    <input 
+                                                        type = "text"
+                                                        name = "description"
+                                                        placeholder="About me"
+                                                        onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
+                                                    />
+                                                    <Button type = "submit">Save changes</Button>
+                                                </form>
+                                                
+                                            )
+                                        }
+                                </section>
+                                {/* <section id="rauchbier" className="tab-panel">
+                                    <h2>My clients</h2>
+                                        <div>
+
+                                        </div>
+                                </section> */}
+                                <section id="dunkles" className="tab-panel">
+                                    <h2>Favorites exercises</h2>
+                                        {
+                                            currentUser.favorites.map((exercise) =>{
+                                                return(
+                                                    <div className="itemposition">
+                                                        <h2>Favorites exercises</h2>
+                                                        <div className="itemstyle">
+                                                            <ItemCard key={exercise.id} exercise={exercise}/>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                </section>
+                                <section id="dunk" className="tab-panel">
+                                {
+                                        // currentUser.addExercise.map((exercise) =>{
+                                        //     return(
+                                        //         <div className="itemposition">
+                                        //             <h2>Favorites exercises</h2>
+                                        //             <div className="itemstyle">
+                                        //                 <ItemCard key={exercise.id} exercise={exercise}/>
+                                        //             </div>
+                                        //         </div>
+                                        //     )
+                                        // })
+                            
+                                <form onSubmit={createWorkout}>
+                                    <div className="itemposition">
+                                        <h2>Create new workout</h2>
+                                            <div className="itemstyle">
+                                                {/* <ItemCard key={exercise.id} exercise={exercise}/> */}
+                                                    <input type= "text" 
+                                                        placeholder="Workout name"
+                                                        value={workoutName}
+                                                        onChange = {(e)=>setWorkOutName(e.target.value)}/>
+                                                    <input 
+                                                    type= "text"
+                                                    placeholder="Description"
+                                                    value={description}
+                                                        onChange = {(e)=>setDescription(e.target.value)}/>
+                                                    
+                                                    <Button>Create</Button>
+                                            </div>
+
+                                    </div>
+                                    
+                                </form>
                                 
+                                }  
+                                <div>
+                                    {
+                                    workout && workout.map ((exercise) =>{
+                                                return(
+                                                    <div>
+                                                        <h2>{exercise.workoutName}</h2>
+                                                        <h2>{exercise.description}</h2>
+                                                        <div>
+                                                            <ItemCard key={exercise.id} exercise={exercise}/>
+                                                        </div>
+                                                        <div></div>
+                                                    </div>
+                                                )
+                    
+                                            })
+                
+                }
+                                    </div>       
+                                </section>
                             </div>
                         </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-2" checked class="tab-switch"/>
-                            <label for="tab-1" class="tab-label">My clients</label>
-                            <div class="tab-content">
-                                <ClientStyle> </ClientStyle>
-                                </div>
-                        </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-3" class="tab-switch"/>
-                            <label for="tab-2" class="tab-label">All workouts programs</label>
-                            <div class="tab-content">My father now and then sending me small sums of money, I laid them out in learning navigation, and other parts of the mathematics, useful to those who intend to travel, as I always believed it would be, some time or other, my fortune to do. </div>
-                        </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-4" class="tab-switch"/>
-                            <label for="tab-3" class="tab-label">Favorites exercises</label>
-                            <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
-                        </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-5" class="tab-switch"/>
-                            <label for="tab-4" class="tab-label">Creat new workout</label>
-                            <div class="tab-content">When I left Mr. Bates, I went down to my father: where, by the assistance of him and my uncle John, and some other relations, I got forty pounds, and a promise of thirty pounds a year to maintain me at Leyden: there I studied physic two years and seven months, knowing it would be useful in long voyages.</div>
-                        </div>
-                    </div>
-                </div>
+                    </TabsStyle>
             </Box>
-                        </>
+            </>
                     )
                 }
                 {
@@ -139,23 +286,32 @@ const Profile = () => {
             </StyledProfile>
 
             <Box>
-                <div class="wrapper">
-                    <div class="tabs">
-                    <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-1"  class="tab-switch"/>
-                            <label for="tab-1" class="tab-label">About Me</label>
-                            <div class="tab-content">
-                            {
-                                display &&(
-                                <>
-                                    <h3>Age: {userProfile.age}</h3>
-                                    <h3>Weight: {userProfile.weight}</h3>
-                                    <p>About me: {userProfile.description} </p>
-                                    <Button onClick={()=> {setDisplay(false)}}>Update</Button>
-                                    </>
-                                )
-                            }
-                            {
+                <TabsStyle>
+                    <div className="tabset">
+                        {/* Tab-1 */}
+                        <input type="radio" name="tabset" id="tab1" aria-controls="marzen"/>
+                        <label htmlFor="tab1">About Me</label>
+                        {/* Tab-2 */}
+                        <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier"/>
+                        <label htmlFor="tab2">Favorites exercises</label>
+                        {/* Tab-3 */}
+                        <input type="radio" name="tabset" id="tab3" aria-controls="dunkles"/>
+                        <label htmlFor="tab3">Create new workout</label>
+                    
+                        <div className="tab-panels">
+                            <section id="marzen" className="tab-panel">
+                            <h2>About Me</h2>
+                                {
+                                    display &&(
+                                        <>
+                                            <h3>Age: {userProfile.age}</h3>
+                                            <h3>Weight: {userProfile.weight}</h3>
+                                            <p>About me: {userProfile.description} </p>
+                                            <Button onClick={()=> {setDisplay(false)}}>Update</Button>
+                                        </>
+                                    )
+                                }
+                                {
                                     !display &&(
                                             <form onSubmit={handleuUpdateUserData}>
                                                 <input 
@@ -176,62 +332,51 @@ const Profile = () => {
                                                     placeholder="About me"
                                                     onChange = {(e)=>updateUserData(e.target.value, e.target.name)}
                                                 />
-                                                <h3>{userProfile.weight}</h3>
                                                 <Button type = "submit">Save changes</Button>
                                             </form>
-                                        
-                                    )
-                                }
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-2" class="tab-switch"/>
-                            <label for="tab-2" class="tab-label">All my workouts programs</label>
-                            <div class="tab-content">My father now and then sending me small sums of money, I laid them out in learning navigation, and other parts of the mathematics, useful to those who intend to travel, as I always believed it would be, some time or other, my fortune to do. </div>
-                        </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-3" class="tab-switch"/>
-                            <label for="tab-3" class="tab-label">Favorites exercises</label>
-                            <div class="tab-content">
-                                <div>
-                                {
-                                    currentUser.favorites.map((exercise) =>{
-                                        return(
-                                            <ItemCard key={exercise.id} exercise={exercise}/>
+                                            
                                         )
-                                    })
-                                }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab">
-                            <input type="radio" name="css-tabs" id="tab-4" class="tab-switch"/>
-                            <label for="tab-4" class="tab-label">Create new workout</label>
-                            <div class="tab-content">
-                                <input type= "text" 
-                                placeholder="Workout name"
-                                onChange = {(e)=>updateUserData(e.target.value, e.target.name)}/>
-                                <input/>
-                                <Button>Create</Button>
-                            </div>
+                                    }
+                            </section>
+                            <section id="rauchbier" className="tab-panel">
+                                <h2>Favorites exercises</h2>
+                                    {
+                                        currentUser.favorites.map((exercise) =>{
+                                            return(
+                                                <div className="itemposition">
+                                                    <h2>Favorites exercises</h2>
+                                                    <div className="itemstyle">
+                                                        <ItemCard key={exercise.id} exercise={exercise}/>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                            </section>
+                            <section id="dunkles" className="tab-panel">
+                                <h2>Create new workout</h2>
+                                    <input type= "text" 
+                                        placeholder="Workout name"
+                                        onChange = {(e)=>updateUserData(e.target.value, e.target.name)}/>
+                                    <input/>
+                                    <Button>Create</Button>
+                            </section>
                         </div>
                     </div>
-                </div>
+                </TabsStyle>
             </Box>
-                        </>
-                    )
-                }
             </>
-            ):(
-                <Loading/>
-            )
-        }
-            
+        )
+    }
         </>
+        ):(
+            <Loading/>
+        )
+    }
+            
+    </>
     )
 }
-
-
 
 const StyleHeader = styled.div`
     height: 400px;
@@ -268,87 +413,98 @@ const StyledProfile = styled.div`
 const Box = styled.div`
     font-family: "Open Sans";
     background: #072227;
-    color: #ecf0f1;
-    line-height: 1.618em;
-
-    .wrapper {
-    max-width: 90rem;
-    width: 100%;
-    margin: 0 auto;
-    }
-    .tabs {
-    position: relative;
-    margin: 3rem 0;
-    background: #4FBDBA;
-    height: 14.75rem;
-    }
-    .tabs::before,
-    .tabs::after {
-    content: "";
-    display: table;
-    }
-    .tabs::after {
-    clear: both;
-    }
-    .tab {
-    float: right;
-    }
-    .tab-switch {
-    display: none;
-    }
-    .tab-label {
-    position: relative;
-    display: block;
     line-height: 2em;
-    height: 3em;
-    padding: 0 1.618em;
-    background: #4FBDBA;
-    border-right: 0.125rem solid #4FBDBA;
-    color: #fff;
-    font-size: 25px;
-    cursor: pointer;
-    top: 0;
-    transition: all 0.25s;
+
+`
+const TabsStyle = styled.div`
+margin-left: 100px;
+    .tabset > input[type="radio"] {
+        position: absolute;
+        left: -400vw;
     }
-    .tab-label:hover {
-    top: -0.25rem;
-    transition: top 0.25s;
+
+    .tabset .tab-panel {
+        display: none;
     }
-    .tab-content {
-    height: 12rem;
-    position: absolute;
-    z-index: 1;
-    top: 2.75em;
-    left: 0;
-    border: 3px solid #072227;
-    padding: 1.618rem;
-    background: #fff;
-    color: #2c3e50;
-    border-bottom: 0.25rem solid #bdc3c7;
-    opacity: 0;
-    transition: all 0.35s;
-    color:red;
+
+    .tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+    .tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+    .tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+    .tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+    .tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+    .tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+    display: block;
     }
-    .tab-switch:checked + .tab-label {
-    background: #fff;
-    color: #2c3e50;
+
+.tabset > label {
+    position: relative;
+    display: inline-block;
+    padding: 15px 15px 25px;
+    border: 1px solid transparent;
     border-bottom: 0;
-    border-right: 0.125rem solid #fff;
-    transition: all 0.35s;
-    z-index: 1;
-    top: -0.0625rem;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 30px;
     }
-    .tab-switch:checked + label + .tab-content {
-    z-index: 1;
-    opacity: 1;
-    transition: all 0.35s;
-}
+
+    .tabset > label::after {
+    content: "";
+        position: absolute;
+        left: 15px;
+        bottom: 10px;
+        width: 42px;
+        height: 8px;
+        background: #8d8d8d;
+        }
+
+    .tabset > label:hover,
+    .tabset > input:focus + label {
+    color: #06c;
+    }
+
+    .tabset > label:hover::after,
+    .tabset > input:focus + label::after,
+    .tabset > input:checked + label::after {
+        background: #06c;
+    }
+
+    .tabset > input:checked + label {
+        border-color: #ccc;
+        border-bottom: 1px solid #fff;
+        margin-bottom: -1px;
+    }
+
+    .tab-panel {
+        padding: 30px 0;
+        border-top: 1px solid #ccc;
+        font-size: 25px;
+    }
+
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    .tabset {
+        max-width: 395em;
+    }
+
+    .itemposition{
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+    .itemstyle{
+        max-width:280px;
+        max-height:400px;
+        margin-left: 50px;
+    }
+    
+    input{
+        padding: 15px;
+        font-size: 20px;
+    }
 `
 
-const ClientStyle = styled.div`
-display: flex;
-`
-const WorkoutStyle = styled.div`
-
-`
 export default Profile;
