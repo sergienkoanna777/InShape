@@ -19,9 +19,6 @@ import Registration from "./Registration";
 import ListOfBody from "./ListOfBody";
 import ListOfTarget from "./ListOfTarget";
 import ListOfEquipement from "./ListOfEquipement";
-import ProfileSarah from "./ProfileSarah";
-import ProfileBrian from "./ProfileBrian";
-import ProfileKen from "./ProfileKen";
 
 const App = () => {
   return (
@@ -45,9 +42,6 @@ const App = () => {
               <Route path="/listoftarget" element={<ListOfTarget/>}/>
               <Route path="/listofequipement" element={<ListOfEquipement/>}/>
               <Route path="/exercises/exercise/:exercise" element={<ItemPage />}/>
-              <Route path="/profilesarah" element={<ProfileSarah/>}/>
-              <Route path="/profilebrian" element={<ProfileBrian/>}/>
-              <Route path="/profileken" element={<ProfileKen />}/>
             </Routes>
           <Footer />
         </>
