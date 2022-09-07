@@ -3,6 +3,7 @@ export const CurrentUserContext = createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
+       //variable to hold result of fetch of current user
     const [currentUser, setCurrentUser] = useState(()=>{
         const user = window.sessionStorage.getItem("user");
         return user !== null ? JSON.parse(user):null;

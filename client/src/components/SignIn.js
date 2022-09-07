@@ -9,6 +9,8 @@ import background from "../media/image24.jpg";
 const SignIn = () =>{
     const navigate = useNavigate();
     const {currentUser, setCurrentUser} = useContext(CurrentUserContext);
+    
+     //initial state of user's info
     const [userPassword, setUserPassword] = useState("");
     const[userEmail, setUserEmail] = useState("");
     const handleEmail = (e) => {
@@ -17,6 +19,8 @@ const SignIn = () =>{
     const handlePassword = (e) => {
         setUserPassword(e.target.value)
     }
+
+     //if there's user that is logged in - push to home page
     useEffect(() =>{
         if(currentUser){
             navigate("/");

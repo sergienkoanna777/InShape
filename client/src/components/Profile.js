@@ -29,7 +29,8 @@ const Profile = () => {
         setUserData({...userData, [name]:value})
     }
     const [workout, setWorkout] = useState(null);
-
+    
+    //variable that update user information
     const handleuUpdateUserData = (e) => {
         e.preventDefault();
         fetch(`/user/${userId}`,{
@@ -68,7 +69,8 @@ const Profile = () => {
             console.log(err);
         });
     }, [])
-
+    
+    //variable that create workout
     const createWorkout = (ev) => {
         ev.preventDefault();
 
