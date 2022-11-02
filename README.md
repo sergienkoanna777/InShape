@@ -1,6 +1,6 @@
 # InShape
 
-InShape - is a full-stack web application for coaches and athletes. After loggin user can search different exercises, create your own workout and take notes. 
+InShape is a full-stack web application for coaches and athletes. After logging in, the user can search different exercises, create their own workout and notes. 
 
 ## Built with
 - ### Frontend
